@@ -9,7 +9,7 @@ module.exports = {
 		filename: 'main.[contenthash].js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
-		assetModuleFilename: 'assets/[name].[contenthash][ext]',
+		assetModuleFilename: 'assets/[name].[hash][ext]',
 	},
 
 	devServer: {

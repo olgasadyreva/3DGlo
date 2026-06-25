@@ -1,3 +1,5 @@
+let timerInterval;
+
 const timer = (deadline) => {
 	const timerHours = document.getElementById('timer-hours')
 	const timerMinutes = document.getElementById('timer-minutes')
@@ -18,15 +20,22 @@ return { timeRemaining, hours, minutes, seconds };
 	}
 
 	const updateClock = () => {
+		console.log('updateClock');
 		let getTime = getTimeRemaining();
-		timerHours.textContent = getTime.hours;
-		timerMinutes.textContent = getTime.minutes;
-		timerSeconds.textContent = getTime.seconds;
 
-		if (getTime.timeRemaining > 0) {
-			setTimeout(updateClock, 1000);
+		timerHours.textContent = String(getTime.hours).padStart(2, '0');
+		timerMinutes.textContent = String(getTime.minutes).padStart(2, '0');
+		timerSeconds.textContent = String(getTime.seconds).padStart(2, '0');
+
+		if (getTime.timeRemaining <= 0) {
+			clearInterval(timerInterval);
+			timerHours.textContent = '00';
+      timerMinutes.textContent = '00';
+      timerSeconds.textContent = '00';
 		}
 	}
+	
+	timerInterval = setInterval(updateClock, 1000);
 	updateClock();
 }
 
