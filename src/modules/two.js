@@ -1,1 +1,5 @@
-console.log('Загружен модуль two.js');
+const two = () => {
+	console.log('two');
+}
+
+export default two;

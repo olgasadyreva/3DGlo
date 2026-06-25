@@ -1,49 +1,63 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  mode: 'development',
+	mode: 'development',
 	context: path.resolve(__dirname, 'src'),
-  entry: './index.js',
-  output: {
-    filename: 'main.[contenthash].js',
-    // Путь для сохранения
-    path: path.resolve(__dirname, 'dist'),
-    // Очистка папки dist перед каждой сборкой
-    clean: true,
-  },
+	entry: './index.js',
+	output: {
+		filename: 'main.[contenthash].js',
+		path: path.resolve(__dirname, 'dist'),
+		clean: true,
+		assetModuleFilename: 'assets/[name].[contenthash][ext]',
+	},
 
-  devServer: {
-    static: {
+	devServer: {
+		static: {
 			directory: './dist',
 			watch: true,
 		},
-    port: 3000,
-    open: true, // Автоматически открывать браузер
-    hot: true,  // Горячая перезагрузка (HMR)
-  },
+		port: 3000,
+		open: true,
+		hot: true,
+	},
 
-  // Плагины
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './index.html',
-    }),
-  ],
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: './index.html',
+		}),
+	],
 
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-      },
-    ],
-  },
-};
+	module: {
+		rules: [
+			{
+				test: /\.html$/i,
+				loader: 'html-loader',
+				options: {
+					sources: {
+						list: [
+							{ tag: 'img', attribute: 'src', type: 'src' },
+							{ tag: 'img', attribute: 'srcset', type: 'srcset' },
+						],
+					},
+				},
+			},
+			{
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.(png|svg|jpg|jpeg|gif|woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
+			},
+			// {
+			// 	test: /\.(png|svg|jpg|jpeg|gif)$/i,
+			// 	type: 'asset/resource',
+			// },
+			// {
+			// 	test: /\.(woff|woff2|eot|ttf|otf)$/i,
+			// 	type: 'asset/resource',
+			// },
+		],
+	},
+}

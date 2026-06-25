@@ -1,10 +1,12 @@
-import './style.css';
-import './modules/one';
-import './modules/two';
+import './bootstrap.min.css';
+import './style.min.css';
+import timer from './modules/timer';
+// import './modules/two';
 
 // import Logo from './assets/logo.png';
 
-console.log('Webpack работает!');
+timer('31 december 2026');
+// two();
 
 if (module.hot) {
     module.hot.accept();
