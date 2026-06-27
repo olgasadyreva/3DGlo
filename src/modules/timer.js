@@ -20,7 +20,6 @@ return { timeRemaining, hours, minutes, seconds };
 	}
 
 	const updateClock = () => {
-		console.log('updateClock');
 		let getTime = getTimeRemaining();
 
 		timerHours.textContent = String(getTime.hours).padStart(2, '0');
