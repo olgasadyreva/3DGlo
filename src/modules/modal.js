@@ -3,6 +3,8 @@ const modal = () => {
 	const buttons = document.querySelectorAll('.popup-btn')
 	const closeBtn = modal.querySelector('.popup-close')
 
+	let animationId = null
+
 	const isMobile = () => {
 		return window.innerWidth < 768
 	}
@@ -38,27 +40,34 @@ const modal = () => {
 	}
 
 	const animateModal = (timing, draw, duration) => {
+		if (animationId) {
+			cancelAnimationFrame(animationId)
+			animationId = null
+		}
+
 		let start = performance.now()
 
-		let requestId = requestAnimationFrame(function animateModal (time) {
+		const animate = (time) => {
 			let timeFraction = (time - start) / duration
 			if (timeFraction > 1) timeFraction = 1
 
 			let progress = timing(timeFraction)
-
 			draw(progress)
 
 			if (timeFraction < 1) {
-				requestAnimationFrame(animateModal)
+				animationId = requestAnimationFrame(animate)
+			} else {
+				animationId = null
 			}
-		})
-		return requestId 
+		}
+
+		animationId = requestAnimationFrame(animate)
+		return animationId
 	}
 
 	const openModal = () => {
 		modal.style.display = 'block'
 
-		// Если мобильное устройство - показываем без анимации
 		if (isMobile()) {
 			modal.style.opacity = '1'
 			modal.style.transform = 'scale(1) translateY(0)'
@@ -79,8 +88,12 @@ const modal = () => {
 	}
 
 	const closeModal = () => {
-		// Если мобильное устройство - закрываем без анимации
 		if (isMobile()) {
+			if (animationId) {
+				cancelAnimationFrame(animationId)
+				animationId = null
+			}
+			
 			modal.style.display = 'none'
 			return
 		}
@@ -98,9 +111,6 @@ const modal = () => {
 			modal.style.display = 'none'
 		}, 300)
 	}
-
-	// отмена запланированного запуска callback
-//cancelAnimationFrame(requestId);
 
 	buttons.forEach(btn => {
 		btn.addEventListener('click', openModal)
@@ -121,9 +131,15 @@ const modal = () => {
 	})
 
 	window.addEventListener('resize', () => {
-		if (modal.style.display === 'block' && isMobile()) {
-			modal.style.opacity = '1'
-			modal.style.transform = 'scale(1) translateY(0)'
+		if (modal.style.display === 'block') {
+			if (isMobile()) {
+				if (animationId) {
+					cancelAnimationFrame(animationId)
+					animationId = null
+				}
+				modal.style.opacity = '1'
+				modal.style.transform = 'scale(1) translateY(0)'
+			}
 		}
 	})
 }
