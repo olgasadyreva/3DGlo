@@ -38,6 +38,7 @@ module.exports = {
 						list: [
 							{ tag: 'img', attribute: 'src', type: 'src' },
 							{ tag: 'img', attribute: 'srcset', type: 'srcset' },
+							{ tag: 'link', attribute: 'href', type: 'src' },
 						],
 					},
 				},

@@ -3,12 +3,14 @@ import './style.min.css';
 import timer from './modules/timer';
 import menu from './modules/menu';
 import modal from './modules/modal';
+import calc from './modules/calc';
 
 // import Logo from './assets/logo.png';
 
 timer('31 december 2026');
 menu();
 modal();
+calc();
 
 if (module.hot) {
     module.hot.accept();
