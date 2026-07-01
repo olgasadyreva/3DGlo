@@ -4,6 +4,7 @@ import timer from './modules/timer';
 import menu from './modules/menu';
 import modal from './modules/modal';
 import calc from './modules/calc';
+import tabs from './modules/tabs';
 
 // import Logo from './assets/logo.png';
 
@@ -11,6 +12,7 @@ timer('31 december 2026');
 menu();
 modal();
 calc();
+tabs();
 
 if (module.hot) {
     module.hot.accept();

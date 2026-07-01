@@ -1,8 +1,7 @@
 const modal = () => {
 	const modal = document.querySelector('.popup')
 	const buttons = document.querySelectorAll('.popup-btn')
-	const closeBtn = modal.querySelector('.popup-close')
-
+	
 	let animationId = null
 
 	const isMobile = () => {
@@ -116,12 +115,13 @@ const modal = () => {
 		btn.addEventListener('click', openModal)
 	})
 
-	closeBtn.addEventListener('click',closeModal)
-	
 	modal.addEventListener('click', (e) => {
-		if (e.target === modal) {
+		if (!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) {
 			closeModal()
 		}
+		// if (e.target === modal) {
+		// 	closeModal()
+		// }
 	})
 
 	document.addEventListener('keydown', (e) => {
